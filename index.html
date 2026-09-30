@@ -4,204 +4,313 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>CoinVerify — Security Demo</title>
+<title>SecurePay — Verification Center</title>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
-  --bg:#07111f;
-  --card:#0d1b2d;
-  --card2:#091625;
-  --border:#1d334d;
-  --text:#eef5ff;
-  --muted:#91a6bb;
-  --green:#55d6be;
-  --yellow:#ffd166;
-  --red:#ff6b6b;
-  --blue:#66aaff;
+  --bg:#f4f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#6b778c;
+  --line:#e3e8f0;
+  --blue:#2457d6;
+  --blue2:#163fa8;
+  --green:#20a66a;
+  --orange:#e9a21a;
+  --red:#d94b4b;
+  --shadow:0 18px 50px rgba(23,32,51,.09);
 }
 
 body{
   margin:0;
   min-height:100vh;
   background:
-    radial-gradient(circle at top,#122942 0,#07111f 48%);
+    radial-gradient(circle at 50% -10%,#e8f0ff,transparent 45%),
+    var(--bg);
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-.wrap{
-  width:min(850px,100%);
+.topbar{
+  background:#fff;
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  width:min(960px,100%);
   margin:auto;
-  padding:18px;
-}
-
-header{
+  padding:17px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-  padding:8px 0 22px;
 }
 
-.logo{
-  font-size:22px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
   font-weight:800;
 }
 
-.logo span{color:var(--green)}
+.shield{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#eaf0ff;
+  color:var(--blue);
+  font-size:18px;
+}
 
-.badge{
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid #29435f;
-  background:#12253a;
-  color:#9fb4ca;
-  font-size:11px;
+.secure{
+  color:var(--green);
+  font-size:12px;
   font-weight:700;
+}
+
+.wrap{
+  width:min(720px,100%);
+  margin:auto;
+  padding:28px 18px 50px;
 }
 
 .card{
-  background:rgba(13,27,45,.96);
-  border:1px solid var(--border);
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:20px;
-  padding:20px;
-  margin-bottom:15px;
-  box-shadow:0 15px 45px #0004;
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
 }
 
-h1{
-  margin:4px 0 8px;
+.hero{
+  text-align:center;
+  padding:34px 24px;
+}
+
+.icon{
+  width:64px;
+  height:64px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:#edf3ff;
+  color:var(--blue);
   font-size:28px;
 }
 
-h2{
+h1{
+  font-size:29px;
   margin:0 0 10px;
-  font-size:19px;
+  letter-spacing:-.6px;
 }
 
-.sub{
-  color:var(--muted);
+h2{
+  font-size:19px;
+  margin:0 0 8px;
+}
+
+p{
   line-height:1.55;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
+.muted{
+  color:var(--muted);
+}
+
+.progress{
+  display:flex;
+  gap:6px;
+  margin:25px auto 0;
+  max-width:360px;
+}
+
+.step{
+  height:5px;
+  flex:1;
+  border-radius:99px;
+  background:#e5eaf1;
+}
+
+.step.active{
+  background:var(--blue);
+}
+
+.status{
+  display:flex;
+  align-items:center;
   gap:12px;
-  margin-top:18px;
-}
-
-.stat{
-  background:var(--card2);
-  border:1px solid #1b3047;
+  padding:15px;
+  border:1px solid var(--line);
   border-radius:14px;
-  padding:14px;
+  margin-top:12px;
 }
 
-.label{
-  color:#8298ae;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.5px;
+.statusIcon{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#eef3fa;
+  color:var(--blue);
 }
 
-.value{
-  margin-top:7px;
-  font-weight:750;
-  word-break:break-word;
+.statusText{
+  flex:1;
+}
+
+.statusTitle{
+  font-weight:700;
+  font-size:14px;
+}
+
+.statusSub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.check{
+  color:var(--green);
+  font-weight:800;
+}
+
+.warning{
+  color:var(--orange);
 }
 
 button{
+  width:100%;
   border:0;
-  border-radius:12px;
-  padding:12px 15px;
+  border-radius:13px;
+  padding:14px 18px;
+  margin-top:16px;
+  background:var(--blue);
+  color:#fff;
+  font-size:15px;
   font-weight:750;
   cursor:pointer;
-  background:var(--green);
-  color:#06131e;
-  margin:5px 4px 0 0;
-}
-
-button.alt{
-  background:#192d44;
-  color:#edf5ff;
-}
-
-button.danger{
-  background:#3a2028;
-  color:#ffb5b5;
+  transition:.15s;
 }
 
 button:hover{
-  filter:brightness(1.08);
+  background:var(--blue2);
+  transform:translateY(-1px);
 }
 
-video{
-  width:100%;
-  max-height:350px;
-  background:#02070d;
-  border-radius:14px;
-  margin-top:14px;
-  display:none;
+button.secondary{
+  background:#edf2f8;
+  color:#253249;
 }
 
-.log{
-  background:#07121f;
-  border:1px solid #172b42;
-  border-radius:12px;
-  padding:12px;
-  margin:8px 0;
-  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
-  font-size:12px;
-  line-height:1.55;
-}
-
-.log .time{
-  color:var(--green);
-}
-
-.log .event{
-  color:#fff;
-  font-weight:700;
-}
-
-pre{
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-.admin{
-  border-color:#4c3f16;
-  background:
-    linear-gradient(180deg,#19170e,#0d1b2d);
+button.secondary:hover{
+  background:#e3e9f1;
 }
 
 .notice{
-  color:#8fa5bb;
+  background:#f7f9fc;
+  border:1px solid var(--line);
+  padding:13px;
+  border-radius:12px;
+  color:var(--muted);
   font-size:12px;
   line-height:1.5;
+}
+
+.loader{
+  width:30px;
+  height:30px;
+  border:3px solid #dce5f5;
+  border-top-color:var(--blue);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:18px auto;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
 .hidden{
   display:none!important;
 }
 
-footer{
-  color:#647b91;
-  text-align:center;
+.result{
+  padding:18px;
+  background:#f3fbf7;
+  border:1px solid #cceedd;
+  border-radius:14px;
+  color:#176b48;
+}
+
+.demoBadge{
+  display:inline-block;
+  margin-bottom:15px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff4d7;
+  color:#896000;
   font-size:11px;
-  padding:10px 0 25px;
+  font-weight:800;
+  letter-spacing:.4px;
+}
+
+.log{
+  background:#0b1422;
+  color:#dfe9f5;
+  border-radius:12px;
+  padding:12px;
+  margin:8px 0;
+  font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+
+.log .time{
+  color:#55d6be;
+}
+
+.log .event{
+  font-weight:800;
+  color:white;
+}
+
+footer{
+  text-align:center;
+  color:#8995a8;
+  font-size:11px;
+  padding-top:10px;
+}
+
+.adminHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.adminHeader button{
+  width:auto;
+  margin:0;
+  padding:9px 12px;
+  font-size:12px;
 }
 
 @media(max-width:600px){
-  .grid{
-    grid-template-columns:1fr;
+  .hero{
+    padding:28px 18px;
   }
 
   h1{
-    font-size:24px;
+    font-size:25px;
+  }
+
+  .card{
+    padding:19px;
   }
 }
 </style>
@@ -209,12 +318,21 @@ footer{
 
 <body>
 
-<div class="wrap">
+<div class="topbar">
+  <div class="nav">
+    <div class="brand">
+      <div class="shield">✓</div>
+      SecurePay
+    </div>
 
-<header>
-  <div class="logo"><span>₿</span> CoinVerify</div>
-  <div class="badge">SECURITY DEMO</div>
-</header>
+    <div class="secure">
+      ● Secure connection
+    </div>
+  </div>
+</div>
+
+
+<div class="wrap">
 
 <!-- =========================
      NORMALE PAGINA
@@ -222,105 +340,167 @@ footer{
 
 <main id="mainPage">
 
-<section class="card">
-  <h1>Security Verification</h1>
+<section class="card hero">
 
-  <div class="sub">
-    Controleer de browseromgeving en beschikbare beveiligingsfuncties.
-    Deze pagina is uitsluitend een demonstratie.
+  <div class="demoBadge">
+    SECURITY VERIFICATION
   </div>
 
-  <div class="grid">
+  <div class="icon">🛡️</div>
 
-    <div class="stat">
-      <div class="label">Bitcoin</div>
-      <div class="value">€104.820</div>
-    </div>
+  <h1>Payment Security Check</h1>
 
-    <div class="stat">
-      <div class="label">Ethereum</div>
-      <div class="value">€3.840</div>
-    </div>
+  <p class="muted">
+    Your session requires a quick security verification
+    before continuing.
+  </p>
 
-    <div class="stat">
-      <div class="label">Camera</div>
-      <div class="value" id="cameraStatus">Niet getest</div>
-    </div>
-
-    <div class="stat">
-      <div class="label">Locatie</div>
-      <div class="value" id="locationStatus">Niet getest</div>
-    </div>
-
-    <div class="stat">
-      <div class="label">IP-adres</div>
-      <div class="value" id="ipStatus">Niet getest</div>
-    </div>
-
-    <div class="stat">
-      <div class="label">Logs</div>
-      <div class="value" id="logCount">0</div>
-    </div>
-
+  <div class="progress">
+    <div class="step active" id="step1"></div>
+    <div class="step" id="step2"></div>
+    <div class="step" id="step3"></div>
   </div>
-</section>
-
-
-<section class="card">
-
-  <h2>Camera verificatie</h2>
-
-  <div class="sub">
-    Start alleen wanneer je expliciet toestemming wilt geven aan de browser.
-  </div>
-
-  <button onclick="startCamera()">Camera testen</button>
-  <button class="alt" onclick="stopCamera()">Camera stoppen</button>
-
-  <video id="camera" autoplay playsinline></video>
 
 </section>
 
 
 <section class="card">
 
-  <h2>Locatie verificatie</h2>
+  <h2>Security checks</h2>
 
-  <div class="sub">
-    Je browser vraagt toestemming voordat locatiegegevens beschikbaar worden.
+  <div class="muted">
+    Complete the automated checks below.
   </div>
 
-  <button onclick="getLocation()">Locatie testen</button>
 
-  <div id="locationResult" class="log hidden"></div>
+  <div class="status">
+
+    <div class="statusIcon">🌐</div>
+
+    <div class="statusText">
+      <div class="statusTitle">
+        Browser connection
+      </div>
+
+      <div class="statusSub">
+        Checking secure browser environment
+      </div>
+    </div>
+
+    <div class="check" id="browserCheck">
+      —
+    </div>
+
+  </div>
+
+
+  <div class="status">
+
+    <div class="statusIcon">🔒</div>
+
+    <div class="statusText">
+      <div class="statusTitle">
+        Security session
+      </div>
+
+      <div class="statusSub">
+        Session integrity verification
+      </div>
+    </div>
+
+    <div class="check" id="sessionCheck">
+      —
+    </div>
+
+  </div>
+
+
+  <div class="status">
+
+    <div class="statusIcon">✓</div>
+
+    <div class="statusText">
+      <div class="statusTitle">
+        Payment protection
+      </div>
+
+      <div class="statusSub">
+        Secure payment environment
+      </div>
+    </div>
+
+    <div class="check" id="paymentCheck">
+      —
+    </div>
+
+  </div>
+
+
+  <button onclick="startVerification()">
+    Start security verification
+  </button>
+
+</section>
+
+
+<section id="verification" class="card hidden">
+
+  <h2>Verification in progress</h2>
+
+  <p class="muted">
+    Please wait while the security environment is checked.
+  </p>
+
+  <div class="loader"></div>
+
+  <div id="verificationText"
+       style="text-align:center;font-weight:700">
+    Initializing secure check...
+  </div>
+
+</section>
+
+
+<section id="complete" class="card hidden">
+
+  <div class="result">
+
+    <h2>✓ Verification complete</h2>
+
+    <p>
+      Your browser session has passed the security
+      verification.
+    </p>
+
+    <strong>
+      Secure session established
+    </strong>
+
+  </div>
+
+  <button onclick="continueDemo()">
+    Continue
+  </button>
 
 </section>
 
 
 <section class="card">
 
-  <h2>IP verificatie</h2>
-
-  <div class="sub">
-    De publieke IP-test wordt uitgevoerd via een externe IP-service.
+  <div class="notice">
+    This website is a security-awareness demonstration.
+    Do not enter passwords, banking information or payment
+    credentials into this page.
   </div>
-
-  <button onclick="getIP()">IP testen</button>
-
-  <div id="ipResult" class="log hidden"></div>
 
 </section>
 
 
 <section class="card">
 
-  <h2>Activiteiten</h2>
+  <h2>Activity</h2>
 
   <div id="publicLogs"></div>
-
-  <button class="alt" onclick="exportJSON()">JSON downloaden</button>
-  <button class="alt" onclick="exportCSV()">CSV downloaden</button>
-  <button class="danger" onclick="clearLogs()">Logs wissen</button>
 
 </section>
 
@@ -328,80 +508,58 @@ footer{
 
 
 <!-- =========================
-     ADMIN / LOG PAGINA
+     ADMIN LOGS
 ========================= -->
 
 <section id="adminPage" class="hidden">
 
-  <div class="card admin">
+  <section class="card">
 
-    <h1>🔐 Logboek</h1>
+    <div class="adminHeader">
 
-    <div class="sub">
-      Lokale CoinVerify security-demo logs.
-    </div>
-
-    <br>
-
-    <div class="grid">
-
-      <div class="stat">
-        <div class="label">Aantal events</div>
-        <div class="value" id="adminCount">0</div>
+      <div>
+        <h1>Security Log</h1>
+        <div class="muted">
+          Local demonstration events
+        </div>
       </div>
 
-      <div class="stat">
-        <div class="label">Laatste event</div>
-        <div class="value" id="adminLast">Geen</div>
-      </div>
+      <button
+        class="secondary"
+        onclick="location.href=location.pathname">
+        Exit
+      </button>
 
     </div>
 
-  </div>
+  </section>
 
 
-  <div class="card">
+  <section class="card">
 
-    <h2>Event log</h2>
+    <h2>Events</h2>
 
     <div id="adminLogs"></div>
 
-    <button onclick="exportJSON()">
-      JSON downloaden
+    <button
+      class="secondary"
+      onclick="exportLogs()">
+      Export logs
     </button>
 
-    <button class="alt" onclick="exportCSV()">
-      CSV downloaden
+    <button
+      class="secondary"
+      onclick="clearLogs()">
+      Clear logs
     </button>
 
-    <button class="danger" onclick="clearLogs()">
-      Alle logs wissen
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>Technische informatie</h2>
-
-    <div class="notice">
-      Deze versie gebruikt localStorage. Daardoor worden logs alleen
-      opgeslagen in de browser waarin de pagina wordt gebruikt.
-      Een GitHub Pages-site kan zelf geen centrale database ontvangen.
-    </div>
-
-    <br>
-
-    <pre id="environment"></pre>
-
-  </div>
+  </section>
 
 </section>
 
 
 <footer>
-  CoinVerify Security Demo · Geen echte betaling · Geen bankgegevens
+  SecurePay Security Awareness Demo
 </footer>
 
 </div>
@@ -410,380 +568,283 @@ footer{
 <script>
 
 /* =========================================
-   CONFIGURATIE
+   LOCAL LOG SYSTEM
 ========================================= */
 
-const STORAGE_KEY = "coinverify_security_logs";
+const STORAGE_KEY =
+  "securepay_demo_logs";
 
-
-/* =========================================
-   LOG SYSTEM
-========================================= */
 
 function getLogs(){
+
   try{
     return JSON.parse(
       localStorage.getItem(STORAGE_KEY) || "[]"
     );
-  }catch{
+  }
+
+  catch{
     return [];
   }
 }
 
 
-function saveLogs(logs){
+function addLog(event, details = {}){
+
+  const logs = getLogs();
+
+  logs.push({
+
+    time:new Date().toISOString(),
+
+    event:event,
+
+    details:details
+
+  });
+
+  if(logs.length > 500){
+    logs.splice(
+      0,
+      logs.length - 500
+    );
+  }
+
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify(logs)
   );
-}
-
-
-function addLog(event, details = {}){
-
-  const entry = {
-    time: new Date().toISOString(),
-    event: event,
-    details: details
-  };
-
-  const logs = getLogs();
-
-  logs.push(entry);
-
-  /*
-    Houd het lokaal overzichtelijk.
-    Maximaal 500 events.
-  */
-  if(logs.length > 500){
-    logs.splice(0, logs.length - 500);
-  }
-
-  saveLogs(logs);
 
   renderLogs();
-
-  return entry;
 }
 
 
 /* =========================================
-   CAMERA
+   VERIFICATION FLOW
 ========================================= */
 
-let cameraStream = null;
+async function startVerification(){
+
+  addLog(
+    "verification_started"
+  );
+
+  document
+    .getElementById("verification")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("complete")
+    .classList.add("hidden");
+
+  document
+    .getElementById("step2")
+    .classList.add("active");
 
 
-async function startCamera(){
-
-  try{
-
-    cameraStream =
-      await navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:false
-      });
-
-    const video =
-      document.getElementById("camera");
-
-    video.srcObject = cameraStream;
-    video.style.display = "block";
-
-    document.getElementById("cameraStatus")
-      .textContent = "Toestemming gegeven";
-
-    addLog(
-      "camera_permission_granted",
-      {
-        video:true,
-        audio:false
-      }
+  const text =
+    document.getElementById(
+      "verificationText"
     );
 
-  }catch(error){
 
-    document.getElementById("cameraStatus")
-      .textContent = "Geen toestemming";
+  text.textContent =
+    "Checking browser environment...";
 
-    addLog(
-      "camera_permission_denied",
-      {
-        error:error.name
-      }
-    );
+  await wait(1200);
 
-  }
+  document
+    .getElementById("browserCheck")
+    .textContent = "✓";
+
+
+  addLog(
+    "browser_check_complete"
+  );
+
+
+  text.textContent =
+    "Checking session security...";
+
+  await wait(1300);
+
+  document
+    .getElementById("sessionCheck")
+    .textContent = "✓";
+
+
+  addLog(
+    "session_check_complete"
+  );
+
+
+  text.textContent =
+    "Checking payment protection...";
+
+  await wait(1200);
+
+  document
+    .getElementById("paymentCheck")
+    .textContent = "✓";
+
+
+  addLog(
+    "payment_protection_check_complete"
+  );
+
+
+  await wait(600);
+
+
+  document
+    .getElementById("verification")
+    .classList.add("hidden");
+
+  document
+    .getElementById("complete")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("step3")
+    .classList.add("active");
+
+
+  addLog(
+    "verification_complete"
+  );
 }
 
 
-function stopCamera(){
+function continueDemo(){
 
-  if(cameraStream){
+  addLog(
+    "continue_clicked"
+  );
 
-    cameraStream
-      .getTracks()
-      .forEach(track => track.stop());
-
-    cameraStream = null;
-  }
-
-  document.getElementById("camera")
-    .style.display = "none";
-
-  document.getElementById("cameraStatus")
-    .textContent = "Gestopt";
-
-  addLog("camera_stopped");
+  alert(
+    "Security-awareness demo: geen echte betaling uitgevoerd."
+  );
 }
 
 
-/* =========================================
-   LOCATIE
-========================================= */
+function wait(ms){
 
-function getLocation(){
-
-  if(!navigator.geolocation){
-
-    document.getElementById("locationStatus")
-      .textContent = "Niet ondersteund";
-
-    addLog("location_not_supported");
-
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-
-    position => {
-
-      const lat =
-        position.coords.latitude;
-
-      const lon =
-        position.coords.longitude;
-
-      const accuracy =
-        position.coords.accuracy;
-
-      document.getElementById("locationStatus")
-        .textContent = "Beschikbaar";
-
-      const result =
-        document.getElementById("locationResult");
-
-      result.classList.remove("hidden");
-
-      result.textContent =
-        "Latitude: " + lat + "\n" +
-        "Longitude: " + lon + "\n" +
-        "Nauwkeurigheid: ±" +
-        Math.round(accuracy) + " meter";
-
-      /*
-        GPS-coördinaten worden NIET opgeslagen.
-      */
-
-      addLog(
-        "location_permission_granted",
-        {
-          available:true
-        }
-      );
-
-    },
-
-    error => {
-
-      document.getElementById("locationStatus")
-        .textContent = "Geen toestemming";
-
-      addLog(
-        "location_permission_denied",
-        {
-          error:error.message
-        }
-      );
-
-    },
-
-    {
-      enableHighAccuracy:false,
-      timeout:10000,
-      maximumAge:60000
-    }
+  return new Promise(
+    resolve => setTimeout(resolve,ms)
   );
 }
 
 
 /* =========================================
-   IP
-========================================= */
-
-async function getIP(){
-
-  const status =
-    document.getElementById("ipStatus");
-
-  const result =
-    document.getElementById("ipResult");
-
-  status.textContent = "Bezig...";
-
-  try{
-
-    const response =
-      await fetch(
-        "https://api.ipify.org?format=json"
-      );
-
-    const data =
-      await response.json();
-
-    const ip = data.ip;
-
-    status.textContent = ip;
-
-    result.classList.remove("hidden");
-
-    result.textContent =
-      "Publiek IP-adres: " + ip;
-
-    /*
-      Het IP wordt hier lokaal in de browserlog
-      opgeslagen omdat de gebruiker bewust
-      op "IP testen" heeft gedrukt.
-    */
-
-    addLog(
-      "ip_test",
-      {
-        ip:ip
-      }
-    );
-
-  }catch(error){
-
-    status.textContent = "Mislukt";
-
-    result.classList.remove("hidden");
-
-    result.textContent =
-      "IP-test kon niet worden uitgevoerd.";
-
-    addLog(
-      "ip_test_failed",
-      {
-        error:error.message
-      }
-    );
-  }
-}
-
-
-/* =========================================
-   LOG WEERGAVE
+   DISPLAY LOGS
 ========================================= */
 
 function renderLogs(){
 
-  const logs = getLogs();
-
-  document.getElementById("logCount")
-    .textContent = logs.length;
-
-  renderPublicLogs();
-  renderAdminLogs();
-}
-
-
-function renderPublicLogs(){
-
-  const container =
-    document.getElementById("publicLogs");
-
-  if(!container) return;
-
   const logs =
-    getLogs().slice(-10).reverse();
+    getLogs();
 
-  if(logs.length === 0){
+  const publicContainer =
+    document.getElementById(
+      "publicLogs"
+    );
 
-    container.innerHTML =
-      '<div class="notice">Nog geen activiteiten.</div>';
+  const adminContainer =
+    document.getElementById(
+      "adminLogs"
+    );
 
-    return;
+
+  const html =
+    logs
+      .slice()
+      .reverse()
+      .map(log => {
+
+        const time =
+          new Date(log.time)
+            .toLocaleString("nl-NL");
+
+        return `
+          <div class="log">
+            <div class="time">
+              ${escapeHTML(time)}
+            </div>
+
+            <div class="event">
+              ${escapeHTML(log.event)}
+            </div>
+
+            ${
+              Object.keys(log.details).length
+              ?
+              `<div>
+                ${escapeHTML(
+                  JSON.stringify(
+                    log.details
+                  )
+                )}
+              </div>`
+              :
+              ""
+            }
+          </div>
+        `;
+
+      })
+      .join("");
+
+
+  if(publicContainer){
+
+    publicContainer.innerHTML =
+      html ||
+      '<div class="muted">No activity yet.</div>';
   }
 
-  container.innerHTML =
-    logs.map(formatLog).join("");
-}
 
+  if(adminContainer){
 
-function renderAdminLogs(){
-
-  const container =
-    document.getElementById("adminLogs");
-
-  if(!container) return;
-
-  const logs =
-    getLogs().slice().reverse();
-
-  document.getElementById("adminCount")
-    .textContent = logs.length;
-
-  if(logs.length){
-
-    document.getElementById("adminLast")
-      .textContent =
-      new Date(logs[0].time)
-        .toLocaleString("nl-NL");
-
-  }else{
-
-    document.getElementById("adminLast")
-      .textContent = "Geen";
-
+    adminContainer.innerHTML =
+      html ||
+      '<div class="muted">No events.</div>';
   }
-
-  if(logs.length === 0){
-
-    container.innerHTML =
-      '<div class="notice">Geen logs gevonden.</div>';
-
-    return;
-  }
-
-  container.innerHTML =
-    logs.map(formatLog).join("");
-}
-
-
-function formatLog(log){
-
-  const date =
-    new Date(log.time)
-      .toLocaleString("nl-NL");
-
-  return `
-    <div class="log">
-      <div class="time">${escapeHTML(date)}</div>
-      <div class="event">${escapeHTML(log.event)}</div>
-      <pre>${escapeHTML(
-        JSON.stringify(log.details,null,2)
-      )}</pre>
-    </div>
-  `;
 }
 
 
 /* =========================================
-   EXPORT JSON
+   ADMIN MODE
 ========================================= */
 
-function exportJSON(){
+function checkAdmin(){
+
+  const params =
+    new URLSearchParams(
+      location.search
+    );
+
+  if(
+    params.get("admin") === "1"
+  ){
+
+    document
+      .getElementById("mainPage")
+      .classList.add("hidden");
+
+    document
+      .getElementById("adminPage")
+      .classList.remove("hidden");
+
+  }
+
+}
+
+
+/* =========================================
+   EXPORT
+========================================= */
+
+function exportLogs(){
 
   const data =
     JSON.stringify(
@@ -792,68 +853,10 @@ function exportJSON(){
       2
     );
 
-  downloadFile(
-    "coinverify-logs.json",
-    data,
-    "application/json"
-  );
-}
-
-
-/* =========================================
-   EXPORT CSV
-========================================= */
-
-function exportCSV(){
-
-  const logs = getLogs();
-
-  const rows = [
-    ["tijd","event","details"]
-  ];
-
-  logs.forEach(log => {
-
-    rows.push([
-      log.time,
-      log.event,
-      JSON.stringify(log.details)
-    ]);
-
-  });
-
-  const csv =
-    rows.map(row =>
-      row.map(value =>
-        '"' +
-        String(value)
-          .replaceAll('"','""') +
-        '"'
-      ).join(",")
-    ).join("\n");
-
-  downloadFile(
-    "coinverify-logs.csv",
-    csv,
-    "text/csv;charset=utf-8"
-  );
-}
-
-
-/* =========================================
-   DOWNLOAD
-========================================= */
-
-function downloadFile(
-  filename,
-  content,
-  type
-){
-
   const blob =
     new Blob(
-      [content],
-      {type:type}
+      [data],
+      {type:"application/json"}
     );
 
   const url =
@@ -863,118 +866,13 @@ function downloadFile(
     document.createElement("a");
 
   a.href = url;
-  a.download = filename;
-
-  document.body.appendChild(a);
+  a.download =
+    "securepay-security-logs.json";
 
   a.click();
-
-  a.remove();
 
   URL.revokeObjectURL(url);
 }
 
 
-/* =========================================
-   LOGS WISSEN
-========================================= */
-
-function clearLogs(){
-
-  if(
-    !confirm(
-      "Alle lokale logs wissen?"
-    )
-  ) return;
-
-  localStorage.removeItem(STORAGE_KEY);
-
-  renderLogs();
-}
-
-
-/* =========================================
-   ADMIN MODE
-========================================= */
-
-function checkAdminMode(){
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const isAdmin =
-    params.get("admin") === "1";
-
-  if(!isAdmin){
-
-    document.getElementById("mainPage")
-      .classList.remove("hidden");
-
-    document.getElementById("adminPage")
-      .classList.add("hidden");
-
-    return;
-  }
-
-  document.getElementById("mainPage")
-    .classList.add("hidden");
-
-  document.getElementById("adminPage")
-    .classList.remove("hidden");
-
-  document.getElementById("environment")
-    .textContent =
-      "User agent:\n" +
-      navigator.userAgent +
-      "\n\n" +
-      "Platform:\n" +
-      navigator.platform +
-      "\n\n" +
-      "Taal:\n" +
-      navigator.language +
-      "\n\n" +
-      "Scherm:\n" +
-      screen.width +
-      " × " +
-      screen.height;
-
-  renderAdminLogs();
-}
-
-
-/* =========================================
-   HTML ESCAPE
-========================================= */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-addLog(
-  "page_opened",
-  {
-    path:location.pathname,
-    language:navigator.language
-  }
-);
-
-checkAdminMode();
-renderLogs();
-
-</script>
-
-</body>
-</html>
+function clearLogs

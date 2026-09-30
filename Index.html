@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinVerify — Security Demo</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#07111f;
+  color:#eef4ff;
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:18px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 0 22px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#55d6be;
+}
+
+.badge{
+  font-size:12px;
+  background:#13253b;
+  padding:7px 10px;
+  border-radius:999px;
+  color:#9fb3ca;
+}
+
+.card{
+  background:#0d1b2d;
+  border:1px solid #1d324b;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:14px;
+  box-shadow:0 12px 35px #0003;
+}
+
+h1{
+  font-size:28px;
+  margin:4px 0 8px;
+}
+
+.sub{
+  color:#9fb3ca;
+  line-height:1.5;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:18px;
+}
+
+.stat{
+  background:#0a1625;
+  border:1px solid #1b3047;
+  border-radius:14px;
+  padding:14px;
+}
+
+.label{
+  font-size:12px;
+  color:#8096ad;
+}
+
+.value{
+  font-size:18px;
+  margin-top:7px;
+  font-weight:700;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 14px;
+  font-weight:700;
+  cursor:pointer;
+  background:#55d6be;
+  color:#06131f;
+}
+
+button.alt{
+  background:#182b42;
+  color:#eaf3ff;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+video{
+  width:100%;
+  border-radius:14px;
+  background:#02070d;
+  margin-top:14px;
+  display:none;
+}
+
+.log{
+  font-family:ui-monospace,monospace;
+  font-size:12px;
+  background:#07111d;
+  border-radius:12px;
+  padding:12px;
+  max-height:220px;
+  overflow:auto;
+}
+
+.log div{
+  padding:6px 0;
+  border-bottom:1px solid #14263a;
+}
+
+.ok{
+  color:#55d6be;
+}
+
+.warn{
+  color:#ffd166;
+}
+
+.notice{
+  font-size:12px;
+  color:#91a6bb;
+  line-height:1.5;
+}
+
+@media(max-width:520px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  h1{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="logo">₿ Coin<span>Verify</span></div>
+  <div class="badge">SECURITY DEMO</div>
+</header>
+
+<section class="card">
+
+<h1>Secure account verification</h1>
+
+<div class="sub">
+Demo-omgeving voor browserrechten. Camera en locatie worden alleen gebruikt nadat jij expliciet toestemming geeft.
+</div>
+
+<div class="grid">
+
+<div class="stat">
+<div class="label">Bitcoin</div>
+<div class="value">€ 104.820</div>
+</div>
+
+<div class="stat">
+<div class="label">Ethereum</div>
+<div class="value">€ 3.840</div>
+</div>
+
+<div class="stat">
+<div class="label">Camera</div>
+<div class="value" id="camState">Niet gestart</div>
+</div>
+
+<div class="stat">
+<div class="label">Locatie</div>
+<div class="value" id="locState">Niet opgehaald</div>
+</div>
+
+</div>
+</section>
+
+
+<section class="card">
+
+<h2>Identity verification</h2>
+
+<div class="sub">
+Kies zelf welke browserfunctie je wilt testen.
+</div>
+
+<div class="row">
+
+<button onclick="startCamera()">
+Camera testen
+</button>
+
+<button class="alt" onclick="stopCamera()">
+Camera stoppen
+</button>
+
+<button onclick="getLocation()">
+Locatie testen
+</button>
+
+<button class="alt" onclick="getIP()">
+IP testen
+</button>
+
+</div>
+
+<video id="video" autoplay playsinline muted></video>
+
+<div class="grid">
+
+<div class="stat">
+<div class="label">Publiek IP</div>
+<div class="value" id="ip">—</div>
+</div>
+
+<div class="stat">
+<div class="label">Coördinaten</div>
+<div class="value" id="coords">—</div>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>Activiteitenlog</h2>
+
+<div class="log" id="log"></div>
+
+<div class="row">
+
+<button class="alt" onclick="clearLog()">
+Log wissen
+</button>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<div class="notice">
+
+<b>Privacy:</b>
+deze demo stuurt camerabeelden en locatie niet naar een server.
+De camerabeeld-preview blijft lokaal in deze browser.
+Gebruik deze pagina niet om mensen heimelijk te filmen, volgen of identificeren.
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+let stream = null;
+
+const logEl = document.getElementById("log");
+
+
+function addLog(msg, cls=""){
+
+  const t = new Date().toLocaleTimeString("nl-NL");
+
+  const d = document.createElement("div");
+
+  d.className = cls;
+
+  d.textContent = t + " — " + msg;
+
+  logEl.prepend(d);
+
+}
+
+
+function clearLog(){
+
+  logEl.innerHTML = "";
+
+  addLog("Log gewist","warn");
+
+}
+
+
+async function startCamera(){
+
+  try{
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video:true,
+      audio:false
+    });
+
+    const v = document.getElementById("video");
+
+    v.srcObject = stream;
+
+    v.style.display = "block";
+
+    document.getElementById("camState").textContent = "Actief";
+
+    addLog("Camera toestemming gegeven","ok");
+
+  }catch(e){
+
+    document.getElementById("camState").textContent = "Geen toegang";
+
+    addLog("Camera niet toegestaan","warn");
+
+  }
+
+}
+
+
+function stopCamera(){
+
+  if(stream){
+
+    stream.getTracks().forEach(t => t.stop());
+
+    stream = null;
+
+  }
+
+  document.getElementById("video").style.display = "none";
+
+  document.getElementById("camState").textContent = "Gestopt";
+
+  addLog("Camera gestopt");
+
+}
+
+
+function getLocation(){
+
+  if(!navigator.geolocation){
+
+    addLog("Locatie niet beschikbaar","warn");
+
+    return;
+
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    p => {
+
+      const lat = p.coords.latitude.toFixed(5);
+
+      const lon = p.coords.longitude.toFixed(5);
+
+      document.getElementById("coords").textContent =
+        lat + ", " + lon;
+
+      document.getElementById("locState").textContent =
+        "Opgehaald";
+
+      addLog("Locatietoestemming gegeven","ok");
+
+    },
+
+    () => {
+
+      document.getElementById("locState").textContent =
+        "Geen toegang";
+
+      addLog("Locatie niet toegestaan","warn");
+
+    },
+
+    {
+      enableHighAccuracy:false,
+      timeout:10000
+    }
+
+  );
+
+}
+
+
+async function getIP(){
+
+  try{
+
+    const r = await fetch(
+      "https://api.ipify.org?format=json"
+    );
+
+    const d = await r.json();
+
+    document.getElementById("ip").textContent =
+      d.ip;
+
+    addLog("Publiek IP opgehaald","ok");
+
+  }catch(e){
+
+    addLog("IP kon niet worden opgehaald","warn");
+
+  }
+
+}
+
+
+addLog("Pagina geopend","ok");
+
+</script>
+
+</body>
+</html>

@@ -1,259 +1,603 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Betaalverzoek</title>
+
 <style>
+:root{
+  --bg:#f5f7fa;
+  --card:#fff;
+  --text:#182230;
+  --muted:#667085;
+  --line:#e5e7eb;
+  --accent:#1463ff;
+  --accent-dark:#0e4fcf;
+  --success:#14804a;
+  --success-bg:#e9f8f0;
+}
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:#f4f6f8;
-  color:#17202a;
+  min-height:100vh;
+  background:linear-gradient(180deg,#f7f9fc 0%,#eef2f7 100%);
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
-header{
+
+.topbar{
+  height:68px;
   background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  padding:18px 22px;
-  font-weight:700;
-  font-size:20px;
-}
-.wrap{
-  max-width:440px;
-  margin:42px auto;
-  padding:0 18px;
-}
-.card{
-  background:white;
-  border-radius:20px;
-  padding:28px;
-  box-shadow:0 10px 35px rgba(0,0,0,.08);
-}
-.avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  margin:auto;
+  border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#e9eef3;
-  font-size:25px;
-  font-weight:700;
+  font-size:20px;
+  font-weight:750;
+  letter-spacing:-.3px;
 }
-.center{text-align:center}
-.name{
-  font-size:21px;
-  font-weight:700;
-  margin-top:15px;
+
+.container{
+  width:min(460px,calc(100% - 30px));
+  margin:42px auto;
 }
-.subtitle{
-  color:#697586;
-  margin-top:6px;
+
+.card{
+  background:var(--card);
+  border:1px solid rgba(16,24,40,.06);
+  border-radius:24px;
+  padding:30px;
+  box-shadow:
+    0 20px 55px rgba(16,24,40,.08),
+    0 2px 8px rgba(16,24,40,.04);
 }
-.amount{
-  font-size:42px;
+
+.icon{
+  width:70px;
+  height:70px;
+  border-radius:21px;
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eef4ff;
+  color:var(--accent);
+  font-size:29px;
   font-weight:800;
-  margin:25px 0 5px;
 }
+
+.center{text-align:center}
+
+.title{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.subtitle{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:15px;
+}
+
+.amount{
+  margin:27px 0 4px;
+  font-size:46px;
+  line-height:1;
+  font-weight:850;
+  letter-spacing:-1.8px;
+}
+
 .description{
-  color:#667085;
-  margin-bottom:25px;
+  color:var(--muted);
+  font-size:14px;
 }
+
+.details{
+  margin:27px 0 22px;
+  border-top:1px solid var(--line);
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+
+.row span:first-child{color:var(--muted)}
+.row span:last-child{font-weight:650}
+
 button{
   width:100%;
   border:0;
-  border-radius:12px;
-  padding:15px;
-  font-size:16px;
-  font-weight:700;
+  border-radius:13px;
+  padding:15px 18px;
+  font-size:15px;
+  font-weight:750;
   cursor:pointer;
-  margin-top:10px;
+  transition:.18s ease;
 }
+
+button:active{transform:scale(.985)}
+
 .primary{
-  background:#111827;
-  color:white;
+  background:var(--accent);
+  color:#fff;
 }
+
+.primary:hover{background:var(--accent-dark)}
+
 .secondary{
-  background:#eef2f6;
-  color:#17202a;
+  margin-top:10px;
+  background:#f1f4f8;
+  color:var(--text);
 }
-.notice{
-  display:none;
+
+.hidden{display:none!important}
+
+.loading{
   margin-top:18px;
-  padding:15px;
-  border-radius:12px;
-  background:#f3f4f6;
+  padding:17px;
+  border-radius:14px;
+  background:#f7f9fc;
+  color:var(--muted);
+  text-align:center;
   font-size:14px;
-  line-height:1.5;
 }
-.status{
-  margin-top:18px;
+
+.spinner{
+  width:20px;
+  height:20px;
+  border:3px solid #d9e2f2;
+  border-top-color:var(--accent);
+  border-radius:50%;
+  margin:0 auto 10px;
+  animation:spin .75s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.success{
+  margin-top:5px;
+  text-align:center;
+}
+
+.successIcon{
+  width:74px;
+  height:74px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--success-bg);
+  color:var(--success);
+  font-size:35px;
+  font-weight:900;
+}
+
+.success h2{
+  margin:0;
+  font-size:25px;
+}
+
+.success p{
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.reference{
+  margin:20px 0;
   padding:14px;
   border-radius:12px;
-  background:#f8fafc;
-  display:none;
+  background:#f7f8fa;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13px;
 }
+
+.permission{
+  margin-top:18px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.permission strong{
+  display:block;
+  margin-bottom:5px;
+}
+
 .footer{
   text-align:center;
+  margin-top:18px;
   color:#8a94a3;
   font-size:12px;
-  margin-top:20px;
 }
+
+/* ADMIN */
+
 .admin{
   display:none;
   margin-top:25px;
 }
+
+.admin h3{
+  margin-bottom:10px;
+}
+
 .log{
-  background:#111827;
-  color:#d1d5db;
-  border-radius:12px;
-  padding:14px;
-  font:12px monospace;
-  max-height:300px;
+  background:#101828;
+  color:#d0d5dd;
+  padding:15px;
+  border-radius:14px;
+  font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;
+  max-height:360px;
   overflow:auto;
   white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.admin button{
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>Betaalverzoek</header>
+<div class="topbar">
+  Betaalverzoek
+</div>
 
-<div class="wrap">
-  <div class="card">
+<main class="container">
 
-    <div class="avatar">€</div>
+  <section class="card">
 
-    <div class="center">
-      <div class="name">Betaalverzoek</div>
-      <div class="subtitle">Er staat een betaalverzoek voor je klaar</div>
+    <!-- REQUEST -->
+    <div id="request">
 
-      <div class="amount">€ 12,50</div>
-      <div class="description">Betaling voor een openstaand verzoek</div>
+      <div class="icon">€</div>
+
+      <div class="center">
+        <div class="title">Betaalverzoek</div>
+        <div class="subtitle">
+          Er staat een betaalverzoek voor je klaar
+        </div>
+
+        <div class="amount">€ 12,50</div>
+
+        <div class="description">
+          Openstaand betaalverzoek
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="row">
+          <span>Omschrijving</span>
+          <span>Openstaand bedrag</span>
+        </div>
+
+        <div class="row">
+          <span>Bedrag</span>
+          <span>€ 12,50</span>
+        </div>
+
+        <div class="row">
+          <span>Status</span>
+          <span>Openstaand</span>
+        </div>
+      </div>
+
+      <button class="primary" onclick="startPayment()">
+        Bekijk betaalverzoek
+      </button>
+
     </div>
 
-    <button class="primary" onclick="openRequest()">
-      Bekijk betaalverzoek
-    </button>
 
-    <div id="payment" class="status">
-      <strong>Betaalverzoek controleren…</strong>
-      <p id="paymentText">
-        Een moment geduld.
+    <!-- LOADING -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      Betaalverzoek wordt gecontroleerd…
+    </div>
+
+
+    <!-- CONFIRMED -->
+    <div id="confirmed" class="success hidden">
+
+      <div class="successIcon">✓</div>
+
+      <h2>Betaling bevestigd</h2>
+
+      <p>
+        Het betaalverzoek is succesvol verwerkt.
       </p>
+
+      <div class="reference">
+        Referentie<br>
+        <strong id="reference"></strong>
+      </div>
+
+      <div class="details">
+        <div class="row">
+          <span>Bedrag</span>
+          <span>€ 12,50</span>
+        </div>
+
+        <div class="row">
+          <span>Status</span>
+          <span>Bevestigd</span>
+        </div>
+      </div>
+
+      <button class="secondary" onclick="resetPage()">
+        Terug naar overzicht
+      </button>
+
     </div>
 
-    <div id="permission" class="notice">
-      Voor deze pagina kun je vrijwillig een
-      <strong>locatiecontrole</strong> uitvoeren.
-      Je browser vraagt hiervoor eerst toestemming.
-      Er wordt niets verstuurd zonder jouw toestemming.
-      <button class="secondary" onclick="requestLocation()">
+
+    <!-- OPTIONAL TESTS -->
+    <div id="tests" class="permission hidden">
+
+      <strong>Controle</strong>
+
+      <span>
+        Je kunt hieronder vrijwillig een browsercontrole uitvoeren.
+        Locatie vraagt eerst toestemming van je browser.
+      </span>
+
+      <button class="secondary" onclick="checkIP()">
+        Verbinding controleren
+      </button>
+
+      <button class="secondary" onclick="checkLocation()">
         Locatie controleren
       </button>
+
+      <div id="testResult"></div>
+
     </div>
 
-    <div id="result" class="notice"></div>
-
-  </div>
+  </section>
 
   <div class="footer">
-    Betaalverzoek · Controleer altijd de ontvanger voordat je betaalt
+    Controleer altijd de ontvanger en het bedrag voordat je betaalt.
   </div>
 
-  <div id="admin" class="admin">
+
+  <!-- ADMIN -->
+  <section id="admin" class="admin">
+
     <h3>Logboek</h3>
-    <div id="log" class="log"></div>
-    <button class="secondary" onclick="downloadLogs()">
-      Logboek exporteren
+
+    <div id="log" class="log">
+      Geen gebeurtenissen.
+    </div>
+
+    <button class="secondary" onclick="exportJSON()">
+      JSON exporteren
     </button>
+
+    <button class="secondary" onclick="exportCSV()">
+      CSV exporteren
+    </button>
+
     <button class="secondary" onclick="clearLogs()">
       Logboek wissen
     </button>
-  </div>
-</div>
+
+  </section>
+
+</main>
+
 
 <script>
-const KEY = "payment_request_logs";
+const STORAGE_KEY = "betaalverzoek_events";
+
 
 function getLogs(){
   try{
-    return JSON.parse(localStorage.getItem(KEY)) || [];
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ) || [];
   }catch{
     return [];
   }
 }
 
-function logEvent(type, data = {}){
-  const logs = getLogs();
+
+function logEvent(type,data={}){
+  const logs=getLogs();
 
   logs.push({
-    time: new Date().toISOString(),
-    type,
+    timestamp:new Date().toISOString(),
+    event:type,
     ...data
   });
 
-  localStorage.setItem(KEY, JSON.stringify(logs));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(logs)
+  );
+
   renderLogs();
 }
 
-function openRequest(){
-  document.getElementById("payment").style.display = "block";
+
+function renderLogs(){
+
+  const el=document.getElementById("log");
+
+  if(!el) return;
+
+  const logs=getLogs();
+
+  el.textContent=logs.length
+    ? logs.map(x=>JSON.stringify(x)).join("\n")
+    : "Geen gebeurtenissen.";
+}
+
+
+function startPayment(){
 
   logEvent("payment_request_opened");
 
-  setTimeout(()=>{
-    document.getElementById("paymentText").innerHTML =
-      "Het betaalverzoek is gecontroleerd. Er wordt geen echte betaling uitgevoerd.";
+  document.getElementById("request")
+    .classList.add("hidden");
 
-    document.getElementById("permission").style.display = "block";
-  },900);
+  document.getElementById("loading")
+    .classList.remove("hidden");
+
+  setTimeout(()=>{
+
+    document.getElementById("loading")
+      .classList.add("hidden");
+
+    document.getElementById("confirmed")
+      .classList.remove("hidden");
+
+    document.getElementById("tests")
+      .classList.remove("hidden");
+
+    const reference =
+      "BP-" +
+      Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+    document.getElementById("reference")
+      .textContent=reference;
+
+    logEvent(
+      "payment_simulated",
+      {
+        amount:"12.50",
+        currency:"EUR",
+        reference
+      }
+    );
+
+  },1300);
 }
 
-async function requestLocation(){
 
-  logEvent("location_permission_requested");
+function resetPage(){
+
+  document.getElementById("confirmed")
+    .classList.add("hidden");
+
+  document.getElementById("tests")
+    .classList.add("hidden");
+
+  document.getElementById("request")
+    .classList.remove("hidden");
+
+  logEvent("page_reset");
+}
+
+
+async function checkIP(){
+
+  const result=
+    document.getElementById("testResult");
+
+  result.innerHTML=
+    "<br>Verbinding controleren…";
+
+  logEvent("ip_check_requested");
+
+  try{
+
+    const response=
+      await fetch(
+        "https://api.ipify.org?format=json"
+      );
+
+    const data=await response.json();
+
+    logEvent(
+      "ip_check_completed",
+      {
+        ip:data.ip
+      }
+    );
+
+    result.innerHTML=
+      "<br>IP-controle voltooid.";
+
+  }catch(error){
+
+    logEvent(
+      "ip_check_failed"
+    );
+
+    result.innerHTML=
+      "<br>IP-controle mislukt.";
+  }
+}
+
+
+function checkLocation(){
+
+  const result=
+    document.getElementById("testResult");
 
   if(!navigator.geolocation){
-    showResult("Locatie wordt niet ondersteund door deze browser.");
+
+    result.innerHTML=
+      "<br>Locatie wordt niet ondersteund.";
+
     return;
   }
 
+  result.innerHTML=
+    "<br>Je browser vraagt toestemming…";
+
+  logEvent(
+    "location_check_requested"
+  );
+
   navigator.geolocation.getCurrentPosition(
-    position => {
 
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
+    position=>{
 
-      /*
-       * Alleen lokaal opgeslagen.
-       * Er wordt geen netwerkrequest uitgevoerd.
-       */
-
-      logEvent("location_permission_granted", {
-        latitude: lat,
-        longitude: lon,
-        accuracy: position.coords.accuracy
-      });
-
-      showResult(
-        "Locatiecontrole voltooid.<br>" +
-        "Coördinaten zijn alleen lokaal in dit browserlog opgeslagen."
+      logEvent(
+        "location_check_completed",
+        {
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude,
+          accuracy:position.coords.accuracy
+        }
       );
+
+      result.innerHTML=
+        "<br>Locatiecontrole voltooid.";
+
     },
 
-    error => {
+    error=>{
 
-      logEvent("location_permission_denied", {
-        code: error.code
-      });
-
-      showResult(
-        "De locatiecontrole kon niet worden uitgevoerd."
+      logEvent(
+        "location_check_denied",
+        {
+          code:error.code
+        }
       );
+
+      result.innerHTML=
+        "<br>Locatiecontrole geweigerd of mislukt.";
     },
 
     {
@@ -264,79 +608,102 @@ async function requestLocation(){
   );
 }
 
-function showResult(text){
-  const el = document.getElementById("result");
-  el.innerHTML = text;
-  el.style.display = "block";
+
+function exportJSON(){
+
+  const blob=new Blob(
+    [JSON.stringify(getLogs(),null,2)],
+    {type:"application/json"}
+  );
+
+  downloadBlob(
+    blob,
+    "betaalverzoek-log.json"
+  );
 }
 
-async function getPublicIP(){
 
-  try{
+function exportCSV(){
 
-    const response =
-      await fetch("https://api.ipify.org?format=json");
+  const logs=getLogs();
 
-    const data = await response.json();
+  if(!logs.length) return;
 
-    /*
-     * Alleen na expliciete aanroep.
-     * Het IP wordt uitsluitend lokaal gelogd.
-     */
+  const keys=[
+    ...new Set(
+      logs.flatMap(
+        x=>Object.keys(x)
+      )
+    )
+  ];
 
-    logEvent("public_ip_checked", {
-      ip: data.ip
-    });
+  const rows=[
+    keys.join(","),
+    ...logs.map(row=>
+      keys.map(key=>
+        JSON.stringify(
+          row[key] ?? ""
+        )
+      ).join(",")
+    )
+  ];
 
-    return data.ip;
+  const blob=new Blob(
+    [rows.join("\n")],
+    {type:"text/csv"}
+  );
 
-  }catch{
-    return null;
-  }
+  downloadBlob(
+    blob,
+    "betaalverzoek-log.csv"
+  );
 }
 
-function renderLogs(){
 
-  const logs = getLogs();
-  const el = document.getElementById("log");
+function downloadBlob(blob,name){
 
-  if(!el) return;
+  const url=
+    URL.createObjectURL(blob);
 
-  el.textContent =
-    logs.length
-      ? logs.map(x => JSON.stringify(x)).join("\n")
-      : "Geen gebeurtenissen.";
-}
+  const a=
+    document.createElement("a");
 
-function downloadLogs(){
-
-  const data = JSON.stringify(getLogs(), null, 2);
-  const blob = new Blob([data], {
-    type:"application/json"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download = "betaalverzoek-log.json";
+  a.href=url;
+  a.download=name;
   a.click();
 
   URL.revokeObjectURL(url);
 }
 
+
 function clearLogs(){
 
-  localStorage.removeItem(KEY);
+  if(!confirm(
+    "Het lokale logboek wissen?"
+  )) return;
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
   renderLogs();
 }
 
-if(new URLSearchParams(location.search).get("admin") === "1"){
-  document.getElementById("admin").style.display = "block";
-  renderLogs();
-}
 
 logEvent("page_opened");
+
+
+if(
+  new URLSearchParams(
+    location.search
+  ).get("admin")==="1"
+){
+
+  document.getElementById("admin")
+    .style.display="block";
+
+  renderLogs();
+}
 </script>
 
 </body>
